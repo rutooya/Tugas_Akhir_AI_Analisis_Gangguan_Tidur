@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Diagnosis for Sleep Disorders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #57356b;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #b69cc5;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #1c5982;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #882121;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #c3e0ff;
+            color: #1c5982;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Sleep Disorder Diagnosis</h1>
+    <form id="diagnosisForm">
+        <label for="gender">Gender:</label>
+        <select id="gender" required>
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" required>
+
+        <label for="occupation">Occupation:</label>
+        <input type="text" id="occupation" required>
+
+        <label for="sleepDuration">Sleep Duration (hours):</label>
+        <input type="number" id="sleepDuration" required>
+
+        <label for="sleepQuality">Quality of Sleep (1-10):</label>
+        <input type="number" id="sleepQuality" min="1" max="10" required>
+
+        <label for="physicalActivity">Physical Activity Level (1-100):</label>
+        <input type="number" id="physicalActivity" min="1" max="100" required>
+
+        <label for="stressLevel">Stress Level (1-10):</label>
+        <input type="number" id="stressLevel" min="1" max="10" required>
+
+        <label for="bmiCategory">BMI Category:</label>
+        <select id="bmiCategory" required>
+            <option value="">Select BMI Category</option>
+            <option value="underweight">Underweight</option>
+            <option value="normal">Normal</option>
+            <option value="overweight">Overweight</option>
+            <option value="obese">Obese</option>
+        </select>
+
+        <label for="bloodPressure">Blood Pressure (mmHg):</label>
+        <input type="text" id="bloodPressure" required>
+
+        <label for="heartRate">Heart Rate (bpm):</label>
+        <input type="number" id="heartRate" required>
+
+        <label for="dailySteps">Daily Steps:</label>
+        <input type="number" id="dailySteps" required>
+
+        <button type="button" onclick="diagnose()">Diagnose</button>
+    </form>
+    <div id="result" class="result" style="display: none;"></div>
+</div>
+
+<script>
+    function diagnose() {
+        // Get input values
+        const gender = document.getElementById('gender').value;
+        const age = parseInt(document.getElementById('age').value);
+        const occupation = document.getElementById('occupation').value;
+        const sleepDuration = parseFloat(document.getElementById('sleepDuration').value);
+        const sleepQuality = parseInt(document.getElementById('sleepQuality').value);
+        const physicalActivity = parseInt(document.getElementById('physicalActivity').value);
+        const stressLevel = parseInt(document.getElementById('stressLevel').value);
+        const bmiCategory = document.getElementById('bmiCategory').value;
+        const bloodPressure = document.getElementById('bloodPressure').value;
+        const heartRate = parseInt(document.getElementById('heartRate').value);
+        const dailySteps = parseInt(document.getElementById('dailySteps').value);
+
+        let diagnosis = 'Diagnosa :';
+        let recom = '\nCara mengatasi :';
+
+        // Diagnosis logic
+        if (sleepDuration < 5 || sleepQuality <= 4) {
+            if (diagnosis !== 'Diagnosa :') {
+                diagnosis += ' & ';
+            }
+            if (recom !== '\nCara mengatasi :'){
+                recom += '\n\n Dan \n';
+            }
+            diagnosis += 'Insomnia';
+            recom += '\n 1. Mengonsumsi makanan sehat dengan gizi seimbang. \n 2. Membatasi konsumsi kafein dan alkohol. \n 3. Berhenti merokok. \n 4. Rutin berolahraga. \n 5. Menghindari konsumsi makanan secara berlebihan sesaat sebelum tidur.'
+        }
+
+        if (physicalActivity < 30 && stressLevel >= 7) {
+            if (diagnosis !== 'Diagnosa :') {
+                diagnosis += ' & ';
+            }
+            if (recom !== '\nCara mengatasi :'){
+                recom += '\n\n Dan \n';
+            }
+            diagnosis += 'Restless Leg Syndrome';
+            recom += '\n 1. Kompres kaki dengan air dingin dan air hangat secara bergantian. \n 2. Mandi atau berendam air hangat. \n 3. Tidur dengan cukup dan teratur, setidaknya 7 jam setiap malam. \n 4. Olahraga secara rutin dan kelola stres dengan baik. \n 5. Konsumsi suplemen tambahan, seperti suplemen zat besi dan vitamin D.'
+        }
+
+        if ((bmiCategory === 'obese' || bmiCategory === 'overweight') && heartRate >= 85) {
+            if (diagnosis !== 'Diagnosa :') {
+                diagnosis += ' & ';
+            }
+            if (recom !== '\nCara mengatasi :'){
+                recom += '\n\n Dan \n';
+            }
+            diagnosis += 'Sleep Apnea';
+            recom += '\n 1. Menurunkan berat badan. \n 2. Berhenti mengonsumsi minuman beralkohol. \n 3. Berhenti merokok.'
+        }
+
+        if (diagnosis === 'Diagnosa :') {
+            diagnosis = 'Normal, no significant sleep disorder detected. ';
+            recom = '';
+        }
+
+        // Display result
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerText = diagnosis + recom;
+        resultDiv.style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
